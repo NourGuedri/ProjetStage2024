@@ -1,17 +1,438 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="en">
+	<head>
 
-        {% block javascripts %}
-{% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		{% block stylesheets %}
+			<link
+			href="https://fonts.googleapis.com/css2?family=Kumbh+Sans&display=swap" rel="stylesheet">
+			<!-- https://fonts.google.com/specimen/Kumbh+Sans -->
+			<link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+			<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('slick/slick.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('slick/slick-theme.css') }}">
+			<link
+			rel="stylesheet" href="{{ asset('css/templatemo-upright.css') }}">
+			{# je fait ajouter ce lien pour remplacer les iconnes de la page home: #}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+			<style>
+				.nav-link{
+					font-size:20px;
+				}
+			
+			</style>
+		{% endblock %}
+
+		{% block javascripts %}
+		{# {% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %} #}
+			<script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+			<script src="{{ asset('js/jquery.singlePageNav.min.js') }}"></script>
+			<script src="{{ asset('js/parallax/parallax.min.js') }}"></script>
+			<script src="{{ asset('js/imagesloaded.pkgd.min.js') }}"></script>
+			<script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
+			<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+			<script src="{{ asset('slick/slick.min.js') }}"></script>
+			<script src="{{ asset('js/templatemo-script.js') }}"></script>
+			<script>
+				document.addEventListener('DOMContentLoaded', function () {
+var dateDebutInput = document.getElementById('startdate');
+var dateFinInput = document.getElementById('enddate');
+
+// Définir la date minimale pour la date de début (aujourd'hui)
+var today = new Date().toISOString().split('T')[0];
+dateDebutInput.setAttribute('min', today);
+
+// Lorsque la date de début change
+dateDebutInput.addEventListener('change', function () { // Définir la date minimale pour la date de fin (un jour après la date de début)
+var dateDebutValue = new Date(dateDebutInput.value);
+dateDebutValue.setDate(dateDebutValue.getDate() + 1);
+var minDateFin = dateDebutValue.toISOString().split('T')[0];
+dateFinInput.setAttribute('min', minDateFin);
+
+// Réinitialiser la valeur de la date de fin si nécessaire
+if (dateFinInput.value <= dateDebutInput.value) {
+dateFinInput.value = '';
+}
+});
+});
+			</script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+			<script>
+				$(document).ready(function () {
+$(".tm-gallery-link").click(function () { // Hide all tables and the annual balance card
+$("#allRequestsTable, #awaitingApprovalTable, #approvedTable, #rejectedTable,#typesTable, #annualBalanceCard").hide();
+
+// Show the table or the annual balance card based on the clicked link
+if ($(this).data('filter') == '*') {
+$("#allRequestsTable").show();
+} else if ($(this).data('filter') == 'portrait') {
+$("#awaitingApprovalTable").show();
+} else if ($(this).data('filter') == 'nature') {
+$("#approvedTable").show();
+} else if ($(this).data('filter') == 'animal') {
+$("#rejectedTable").show();
+}else if ($(this).data('filter') == 'typesL') {
+$("#typesTable").show();
+} else if ($(this).data('filter') == 'building') {
+$("#annualBalanceCard").show();
+}
+});
+});
+			</script>
+
+		{% endblock %}
+	</head>
+	<body>
+
+		<div class="container-fluid">
+			<div
+				class="row">
+				<!-- Leftside bar -->
+				<div id="tm-sidebar" class="tm-sidebar">
+					<nav class="tm-nav">
+						<button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+							<i class="fas fa-bars"></i>
+						</button>
+						<div>
+							<div class="tm-brand-box">
+								<h1 class="tm-brand" style="font-size: 35px;">LeaveSpace</h1>
+							</div>
+							<ul id="tm-main-nav">
+								<li class="nav-item">
+									<a href="#home" class="nav-link current">
+										<div class="triangle-right"></div>
+										<i class="fas fa-home nav-icon"></i>Home</a>
+								</li>
+								<li class="nav-item">
+									<a href="#gallery" class="nav-link">
+										<div class="triangle-right"></div>
+										<i class="fas fa-rectangle-list nav-icon"></i>Requests</a>
+								</li>
+								<hr style="width:220px;border-width:1px; border-color:#006699;margin: 0 0 20px 0;">
+								<li class="nav-item">
+									<a href="{{ path('employe_index_update_profile') }}" class="nav-link">
+										<div class="triangle-right"></div>
+										<i class="fas fa-user-friends nav-icon"></i>My Profile</a>
+								</li>
+								<li class="nav-item">
+									<a href="{{ path('employe_index_leave_request')}}" class="nav-link">
+										<div class="triangle-right"></div>
+										<i class="fas fa-envelope nav-icon"></i>Request Leave</a>
+								</li>
+								{% if app.session.get('user') and app.session.get('user').department == 'Human Resources' %}
+									<li class="nav-item">
+										<a href="{{ path('dashboard') }}" class="nav-link external">
+											<div class="triangle-right"></div>
+											<i class="fas fa-solid fa-gauge"></i>Dashboard</a>
+									</li>
+								{% endif %}
+								<li class="nav-item">
+									<a href="{{ path('logout') }}" class="nav-link external" target="_parent" rel="sponsored">
+										<div class="triangle-right"></div>
+										<i class="fas fa-external-link-alt nav-icon"></i>Logout</a>
+								</li>
+							</ul>
+						</div>
+						<footer class="mb-3 tm-mt-100"></footer>
+					</nav>
+				</div>
+
+
+				<!-- Main Content -->
+				<div
+					id="content">
+
+					<!-- Topbar -->
+					<nav
+						class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top shadow">
+
+						<!-- Sidebar Toggle (Topbar) -->
+						<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-1">
+							<i class="fa fa-bars"></i>
+						</button>
+
+
+						<!-- Topbar Navbar -->
+						<ul class="navbar-nav ml-auto">
+
+
+							<div class="topbar-divider d-none d-sm-block"></div>
+
+							<!-- Nav Item - User Information -->
+							<li
+								class="nav-item dropdown no-arrow">
+								{# <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> #}
+								<span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ app.session.get('user').username }}</span>
+								<img class="img-profile rounded-circle" src="{{ asset('imgdash/undraw_profile.svg') }}" style="width: 50px; height: 50px;">
+							</li>
+						</a>
+						<!-- Dropdown - User Information -->
+						<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+								<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+								Logout
+							</a>
+						</div>
+					</li>
+
+				</ul>
+
+			</nav>
+
+			<div
+				class="tm-main">
+				<!-- Home section -->
+				<div class="tm-section-wrap">
+					<div class="tm-parallax" data-parallax="scroll" data-image-src="{{asset('images/v3\.png')}}"></div>
+					<section id="home" class="tm-section">
+
+						<h2 class="tm-text-primary">Welcome to LeaveSpace
+						</h2>
+						<hr class="mb-5">
+						<div class="row">
+							<div class="col-lg-6 tm-col-home mb-4">
+								<div class="tm-text-container">
+									<div class="tm-icon-container mb-5 mr-0 ml-auto">
+										<i class="fa-solid fa-calendar-days fa-4x tm-text-primary"></i>
+									</div>
+									  {# hetha me habch yekhdm pour afficher les informations  de l'utilisateur connecté  #}
+									{% if user %}
+										<p>Welcome, <span style="color: orange;">{{ user.getUserName() }}</span> from the <span style="color: orange;">{{ user.getDepartment() }}</span> department! 
+										As a member of our team, this space has been specially designed for you. Here, you will find everything you need to manage your work-life balance effectively.</p>					
+										{% endif %}
+									<div class="text-left">
+										<a href="#gallery" class="btn btn-primary tm-btn-next">Next Page</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 tm-col-home mb-4">
+								<div class="tm-text-container">
+									<div class="tm-icon-container mb-5 mr-0 ml-auto">
+										<i class="fa-solid fa-umbrella-beach fa-4x tm-text-primary"></i>
+									</div>
+									<p>
+										From tracking your upcoming leaves to accessing important documents and staying updated on the latest team news. If you have any questions or need assistance, our support team is always here to help. Let's make every workday a productive and fulfilling day!
+									</p>
+									
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</section>
+			</div>
+
+			<!-- Section de la Requests of user -->
+			<div class="tm-section-wrap">
+				<div class="tm-parallax" data-parallax="scroll" data-image-src="{{asset('images/im8\.png')}}"></div>
+				<section id="gallery" class="tm-section" >
+					<h2 class="tm-text-primary">Requests</h2>
+					<hr class="mb-5">
+					<ul class="tm-gallery-links">
+						<li>
+							<a href="javascript:void(0);" class="active tm-gallery-link" data-filter="*">
+								<i class="fas fa-layer-group tm-gallery-link-icon"></i>
+								All
+							</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tm-gallery-link" data-filter="portrait">
+								<i class="fa-solid fa-clock"></i>
+								Awaiting Approval
+							</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tm-gallery-link" data-filter="nature">
+								<i class="fa-solid fa-circle-check"></i>
+								Approved
+							</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tm-gallery-link" data-filter="animal">
+								<i class="fa-solid fa-circle-xmark"></i>
+								Rejected
+							</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tm-gallery-link" data-filter="typesL">
+								<i class="fa-solid fa-hourglass-end"></i>
+								Days
+							</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" class="tm-gallery-link" data-filter="building">
+								<i class="fa-solid fa-bell"></i>
+								Check leave balance
+							</a>
+						</li>
+					</ul>
+					<div class="container-fluid">
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6  style="color: orange;">All Requests (Total:{{ requestLeaves|length }})</h6>
+						</div> 
+					<div class="card-body">
+						<div class="table-responsive">
+                <table class="table table-bordered" id="allRequestsTable" width="100%" cellspacing="0">
+							<tr>
+								<th>Leave Type</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>Total Days</th>
+								<th>Status</th>
+								<th>Reason</th>
+							</tr>
+							{% for requestLeave in requestLeaves %}
+								<tr>
+									<td>{{ requestLeave.leaveType.name }}</td>
+									<td>{{ requestLeave.startDate|date('Y-m-d') }}</td>
+									<td>{{ requestLeave.endDate|date('Y-m-d') }}</td>
+									<td>{{ requestLeave.endDate.diff(requestLeave.startDate).days +1}}</td>
+									<td>{{ requestLeave.status }}</td>
+									<td>{{ requestLeave.reason }}</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="6">No requests yet.</td>
+								</tr>
+							{% endfor %}
+						</table>
+						{# <hr> #}
+							<h6  style="color: orange;">Awaiting Approval (Total:
+							{{ requestLeaves|filter(request => request.status == 'pending')|length }})</h6>
+						<table class="table table-bordered" id="awaitingApprovalTable" width="100%" cellspacing="0">
+							<tr>
+								<th>Leave Type</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>Total Days</th>
+								<th>Status</th>
+								<th>Reason</th>
+							</tr>
+							{% for requestLeave in requestLeaves %}
+								{% if requestLeave.status == 'pending' %}
+									<tr>
+										<td>{{ requestLeave.leaveType.name }}</td>
+										<td>{{ requestLeave.startDate|date('Y-m-d') }}</td>
+										<td>{{ requestLeave.endDate|date('Y-m-d') }}</td>
+										<td>{{ requestLeave.endDate.diff(requestLeave.startDate).days +1}}</td>
+										<td>{{ requestLeave.status }}</td>
+										<td>{{ requestLeave.reason }}</td>
+									</tr>
+								{% endif %}
+							{% else %}
+								<tr>
+									<td colspan="6">No requests yet.</td>
+								</tr>
+							{% endfor %}
+						</table>
+						{# <hr> #}
+						<h6 style="color: orange;">Approved (Total:
+							{{ requestLeaves|filter(request => request.status == 'approved')|length }})</h6>
+						<table class="table table-bordered" id="approvedTable" width="100%" cellspacing="0">
+							<tr>
+								<th>Leave Type</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>Total Days</th>
+								<th>Status</th>
+								<th>Reason</th>
+							</tr>
+							{% for requestLeave in requestLeaves %}
+								{% if requestLeave.status == 'approved' %}
+									<tr>
+										<td>{{ requestLeave.leaveType.name }}</td>
+										<td>{{ requestLeave.startDate|date('Y-m-d') }}</td>
+										<td>{{ requestLeave.endDate|date('Y-m-d') }}</td>
+										<td>{{ requestLeave.endDate.diff(requestLeave.startDate).days +1 }}</td>
+										<td>{{ requestLeave.status }}</td>
+										<td>{{ requestLeave.reason }}</td>
+									</tr>
+								{% endif %}
+							{% else %}
+								<tr>
+									<td colspan="6">No requests yet.</td>
+								</tr>
+							{% endfor %}
+						</table>
+						{# <hr> #}
+						<h6 style="color: orange;">Rejected (Total:
+							{{ requestLeaves|filter(request => request.status == 'rejected')|length }})</h6>
+						<table class="table table-bordered" id="rejectedTable" width="100%" cellspacing="0">
+							<tr>
+								<th>Leave Type</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>Total Days</th>
+								<th>Status</th>
+								<th>Reason</th>
+							</tr>
+							{% for requestLeave in requestLeaves %}
+					{% if requestLeave.status == 'rejected' %}
+						<tr>
+							<td>{{ requestLeave.leaveType.name }}</td>
+							<td>{{ requestLeave.startDate|date('Y-m-d') }}</td>
+							<td>{{ requestLeave.endDate|date('Y-m-d') }}</td>
+							<td>{{ requestLeave.endDate.diff(requestLeave.startDate).days +1 }}</td>
+							<td>{{ requestLeave.status }}</td>
+							<td>{{ requestLeave.reason }}</td>
+						</tr>
+					{% endif %}
+				{% else %}
+					<tr>
+						<td colspan="8">No requests yet.</td>
+					</tr>
+				{% endfor %}
+						</table>
+						<h6 style="color: orange;">Days Allocated for Leave</h6>
+						<table class="table table-bordered" id="typesTable" width="100%" cellspacing="0">
+							<tr>
+								<th>Leave Type</th>
+								<th>Consumed Days</th> <!-- New column -->
+								<th>Remaining Days</th> <!-- New column -->
+							</tr>
+							
+							{% for leaveBalance in leaveBalances %}
+								<tr> <!-- Start of row -->
+									<td>{{ leaveBalance.leaveType.name }}</td>
+									<td>{{ leaveBalance.consumed }}</td>
+									<td>{{ leaveBalance.remaining }}</td>
+								</tr> <!-- End of row -->
+							{% else %}
+								<tr>
+									<td colspan="3">No leave balances yet.</td>
+								</tr>
+							{% endfor %}
+							
+						</table>					
+						</ul>
+					{# <hr> #}
+				<div class="text-center">
+				<a href="{{ path('employe_index_leave_request')}}" class="btn btn-primary tm-btn-next">Request a leave</a>
+				</div>
+				<br>
+					<div class="card" id="annualBalanceCard">
+						<div class="card-header" style="color: violet;" >
+							Your Annual Balance
+						</div>
+						<div class="card-body">
+							<p class="card-text">{{ annualBalance }}</p>
+						</div>
+						
+					</div>
+					
+				</section>
+			</div>
+			
+			 {% block body %}{% endblock %}</body></html>

@@ -1,5 +1,138 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+lucky_number:
+    path: /lucky/number
+    controller: App\Controller\EmployeController::number
+
+employe_index:
+    path: /
+    controller: App\Controller\EmployeController::index
+
+employe_index_update_profile:
+    path: /employe/index_update_profile
+    controller: App\Controller\EmployeController::indexUpdateProfile
+
+employe_index_leave_request:
+    path: /employe/index_leave_request
+    controller: App\Controller\EmployeController::indexLeaveRequest
+
+
+# hedheya kif fel brwoser tekteb /auth traja3lek el page mta3 el auth
+auth_page:
+    path: /auth
+    controller: App\Controller\AuthController::index
+    methods: GET
+
+
+# hedheya bch tekhou el form data w tsajel el user wenty kaed t3aytelha mel formulaire kif taamel request post
+signup:
+    path: /auth/signup
+    controller: App\Controller\AuthController::signup
+    methods: POST 
+
+
+
+
+login:
+    path: /login
+    controller: App\Controller\AuthController::login
+    methods: POST
+
+login_failed:
+    path: /login-faild
+    controller: App\Controller\AuthController::loginFailed
+    methods: GET
+
+logout:
+    path: /logout
+    controller: App\Controller\AuthController::logout
+    methods: GET
+
+profile_update:
+    path: /profile_update
+    controller: App\Controller\UserController::profileUpdate
+    methods: POST
+
+employe_update_profile:
+    path: /employe_update_profile
+    controller: App\Controller\UserController::employeUpdateProfile
+    methods: [GET, POST]
+
+dashboard:
+    path: /dashboard
+    controller: App\Controller\DashboardController::index
+    methods: GET
+
+leave_type_create:
+    path: /leave_type_create
+    controller: App\Controller\LeaveTypeController::create
+    methods: POST
+
+leave_types:
+    path: /leave-types
+    controller: App\Controller\LeaveTypeController::leaveTypes
+
+leave_type_delete:
+    path: /leave-type/delete/{id}
+    controller: App\Controller\LeaveTypeController::delete
+    methods: POST
+
+tables:
+    path: /dashboard/tables
+    controller: App\Controller\DashboardController::tables
+    methods: GET 
+
+charts:
+    path: /dashboard/charts
+    controller: App\Controller\DashboardController::charts
+    methods: GET
+
+deletetype:
+    path: /dashboard/deletetype
+    controller: App\Controller\DashboardController::deletetype
+    methods: GET
+
+leave_type_modify:
+    path: /leave-type/modify/{id}
+    controller: App\Controller\LeaveTypeController::modify
+    methods: [GET, POST]
+
+leavebalance:
+    path: /dashboard/leavebalance
+    controller: App\Controller\DashboardController::leavebalance
+    methods: GET
+
+leavebalance_edit:
+  path: /leavebalance/edit/{id}
+  controller: App\Controller\DashboardController::edit
+
+leavebalance_delete:
+  path: /leavebalance/delete/{id}
+  controller: App\Controller\DashboardController::delete
+
+employe_request_leave:
+    path: /employe/request-leave
+    controller: App\Controller\RequestLeaveController::requestLeave
+    methods: POST
+
+employe_leave_requests:
+    path: /employe/leave-requests
+    controller: App\Controller\RequestLeaveController::leaveRequests
+    methods: GET
+
+employe_approve_leave:
+    path: /employe/approve/{id}
+    controller: App\Controller\RequestLeaveController::approveLeave
+    methods: POST
+
+employe_reject_leave:
+    path: /employe/reject/{id}
+    controller: App\Controller\RequestLeaveController::rejectLeave
+    methods: POST
+
+admin_leave_requests:
+    path: /admin/leave-requests
+    controller: App\Controller\RequestLeaveController::leaveRequests
+
+edit_annual_balance:
+    path: /edit-annual-balance/{id}
+    controller: App\Controller\DashboardController::editAnnualBalance
+    

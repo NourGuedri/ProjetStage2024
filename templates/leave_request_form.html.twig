@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		{% block stylesheets %}
+			<link
+			href="https://fonts.googleapis.com/css2?family=Kumbh+Sans&display=swap" rel="stylesheet">
+			<!-- https://fonts.google.com/specimen/Kumbh+Sans -->
+			<link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+			<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('slick/slick.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('slick/slick-theme.css') }}">
+			<link
+			rel="stylesheet" href="{{ asset('css/templatemo-upright.css') }}">
+			{# je fait ajouter ce lien pour remplacer les iconnes de la page home: #}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+			<style>
+				.nav-link{
+					font-size:20px;
+				}
+			
+			</style>
+		{% endblock %}
+
+		{% block javascripts %}
+		{# {% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %} #}
+			<script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+			<script src="{{ asset('js/jquery.singlePageNav.min.js') }}"></script>
+			<script src="{{ asset('js/parallax/parallax.min.js') }}"></script>
+			<script src="{{ asset('js/imagesloaded.pkgd.min.js') }}"></script>
+			<script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
+			<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+			<script src="{{ asset('slick/slick.min.js') }}"></script>
+			<script src="{{ asset('js/templatemo-script.js') }}"></script>
+			<script>
+				document.addEventListener('DOMContentLoaded', function () {
+var dateDebutInput = document.getElementById('startdate');
+var dateFinInput = document.getElementById('enddate');
+
+// Définir la date minimale pour la date de début (aujourd'hui)
+var today = new Date().toISOString().split('T')[0];
+dateDebutInput.setAttribute('min', today);
+
+// Lorsque la date de début change
+dateDebutInput.addEventListener('change', function () { // Définir la date minimale pour la date de fin (un jour après la date de début)
+var dateDebutValue = new Date(dateDebutInput.value);
+dateDebutValue.setDate(dateDebutValue.getDate() + 1);
+var minDateFin = dateDebutValue.toISOString().split('T')[0];
+dateFinInput.setAttribute('min', minDateFin);
+
+// Réinitialiser la valeur de la date de fin si nécessaire
+if (dateFinInput.value <= dateDebutInput.value) {
+dateFinInput.value = '';
+}
+});
+});
+			</script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+			<script>
+				$(document).ready(function () {
+$(".tm-gallery-link").click(function () { // Hide all tables and the annual balance card
+$("#allRequestsTable, #awaitingApprovalTable, #approvedTable, #rejectedTable,#typesTable, #annualBalanceCard").hide();
+
+// Show the table or the annual balance card based on the clicked link
+if ($(this).data('filter') == '*') {
+$("#allRequestsTable").show();
+} else if ($(this).data('filter') == 'portrait') {
+$("#awaitingApprovalTable").show();
+} else if ($(this).data('filter') == 'nature') {
+$("#approvedTable").show();
+} else if ($(this).data('filter') == 'animal') {
+$("#rejectedTable").show();
+}else if ($(this).data('filter') == 'typesL') {
+$("#typesTable").show();
+} else if ($(this).data('filter') == 'building') {
+$("#annualBalanceCard").show();
+}
+});
+});
+			</script>
+
+		{% endblock %}
+	</head>
+	<body>
+
+		<div class="container-fluid">
+			<div
+				class="row">
+				<!-- Leftside bar -->
+				<div id="tm-sidebar" class="tm-sidebar">
+					<nav class="tm-nav">
+						<button class="navbar-toggler" type="button" aria-label="Toggle navigation">
+							<i class="fas fa-bars"></i>
+						</button>
+						<div>
+							<div class="tm-brand-box">
+								<h1 class="tm-brand" style="font-size: 35px;">LeaveSpace</h1>
+							</div>
+							<ul id="tm-main-nav">
+								<li class="nav-item">
+									<a href="{{ path('employe_index') }}" class="nav-link current">
+										<div class="triangle-right"></div>
+										<i class="fas fa-home nav-icon"></i>Home</a>
+								</li>
+
+								<li class="nav-item">
+									<a href="{{ path('employe_index_update_profile') }}" class="nav-link">
+										<div class="triangle-right"></div>
+										<i class="fas fa-user-friends nav-icon"></i>My Profile</a>
+								</li>
+								<li class="nav-item">
+									<a href="{{ path('employe_index_leave_request')}}" class="nav-link">
+										<div class="triangle-right"></div>
+										<i class="fas fa-envelope nav-icon"></i>Request Leave</a>
+								</li>
+								{% if app.session.get('user') and app.session.get('user').department == 'Human Resources' %}
+									<li class="nav-item">
+										<a href="{{ path('dashboard') }}" class="nav-link external">
+											<div class="triangle-right"></div>
+											<i class="fas fa-solid fa-gauge"></i>Dashboard</a>
+									</li>
+								{% endif %}
+								<li class="nav-item">
+									<a href="{{ path('logout') }}" class="nav-link external" target="_parent" rel="sponsored">
+										<div class="triangle-right"></div>
+										<i class="fas fa-external-link-alt nav-icon"></i>Logout</a>
+								</li>
+							</ul>
+						</div>
+						<footer class="mb-3 tm-mt-100"></footer>
+					</nav>
+				</div>
+
+
+				
+<div class="tm-section-wrap">
+    <div class="tm-parallax" data-parallax="scroll" data-image-src="{{asset('images/k3\.jpg')}}">
+    </div>
+    <div id="contact" class="tm-section"><h2 class="tm-text-primary">Request Leave</h2><hr class="mb-5">
+        <div class="row">
+            <div class="col-xl-6 tm-contact-col-l mb-4">
+                <form id="contact-form" action="{{ path('employe_request_leave') }}" method="POST" class="tm-contact-form">
+                    <div class="form-group">
+                        <label for="startdate">Start date of leave:</label>
+                        <input type="date" id="startdate" name="startdate" class="form-control rounded-0" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="enddate">End date of leave:</label>
+                        <input type="date" id="enddate" name="enddate" class="form-control rounded-0" required/>
+                    </div>
+                    {% if errorMessage is defined %}
+                        <div class="alert alert-danger">
+                            {{ errorMessage }}
+                        </div>
+                    {% endif %}
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                        <div class="form-group">
+                            <select class="form-control" id="contact-select" name="inquiry">
+                                {% for leaveType in leaveTypes %}
+                                    <option value="{{ leaveType.id }}">{{ leaveType.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+	                        <textarea rows="8" name="reason" class="form-control rounded-0" placeholder="Reason" required=></textarea>
+                        </div>
+                        <div class="form-group tm-text-right">
+	                        <button type="submit" class="btn btn-primary" style="width: 255px;">Send</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div> {% block body %}{% endblock %}</body></html>

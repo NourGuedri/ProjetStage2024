@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Sign up / Login Form</title>
+		<link rel="stylesheet" href="./style.css">
+	</head>
+	<body>
+		<div
+			class="main">
+			{# condition checkbox checked on registered variable #}
+			<input type="checkbox" id="chk" aria-hidden="true" {% if registered is defined %} checked {% endif %}>
+
+
+			<div class="signup">
+				<form method="post" action="{{ path('signup') }}">
+					<label for="chk" aria-hidden="true">Sign up</label>
+
+
+					<input type="text" name="user_name" placeholder="User name" required="">
+					{% for message in app.flashes('username-error') %}
+						<div class="alert alert-success" style="color:red;font-size:10px;width:100%;text-align:center;">
+							{{ message }}
+						</div>
+					{% endfor %}
+					{# <input type="text" name="department" placeholder="Department" required=""> #}
+					<div style="display: flex; justify-content: center;">
+						<select name="department" required="" style="width: 65%; height: 35px; background: #e0dede; margin: 2px auto; padding: 10px; border: none; outline: none; border-radius: 5px; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
+							<option value="" disabled selected>
+								Department</option>
+							<option value="Human Resources">Human Resources</option>
+							<option value="Finance">Finance</option>
+							<option value="Marketing">Marketing</option>
+							<option value="Production">Production</option>
+							<option value="Information Technology">Information Technology</option>
+							<option value="Customer Service">Customer Service</option>
+							<option value="Development">Development</option>
+							<option value="Administration">Administration</option>
+						</select>
+					</div>
+					<input type="date" name="date_of_birth" placeholder="Date of birth" required="">
+					<input type="email" name="email" placeholder="Email" required="">
+					{% for message in app.flashes('email-error') %}
+						<div class="alert alert-success" style="color:red;font-size:10px;width:100%;text-align:center;">
+							{{ message }}
+						</div>
+					{% endfor %}
+					<input type="password" name="password" placeholder="Password" required="">
+
+					<button type="submit">Sign up</button>
+				</form>
+			</div>
+
+			<div class="login">
+				<form method="post" action="{{ path('login') }}">
+					
+
+					<label for="chk" aria-hidden="true">Login</label>
+					<input type="text" name="user_name" placeholder="User Name" required="">
+					<input type="email" name="email" placeholder="Email" required="">
+					<input type="password" name="password" placeholder="Password" required="">
+					{% for message in app.flashes('error') %}
+						<div class="alert alert-danger" style="color:red;font-size:10px;width:100%;text-align:center;">
+							{{ message }}
+						</div>
+					{% endfor %}
+          {% for message in app.flashes('success') %}
+						<div class="alert alert-success" style="text-align:center;text-align:center;">
+							{{ message }}
+						</div>
+					{% endfor %}
+					<button type="submit">Login</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
